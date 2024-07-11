@@ -1,0 +1,64 @@
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <br/>
+    <form id="editform">
+        <label for="firstname">firstname</label>
+        <input type="text" name="firstname" id="firstname">
+        <label for="lastname">lastname</label>
+        <input type="text" name="lastname" id="lastname">
+        <label for="mobile">mobile</label>
+        <input type="text" name="mobile" id="mobile">
+        <label for="email">email</label>
+        <input type="text" name="email" id="email">
+        <label for="avatar">Select a file</label><br>
+        <input type="file" name="avatar" id="avatar"><br>
+        <button type="submit" id="submitform">submit</button>
+
+    </form>
+    <br>
+    <button id="homelink" type="button">home</button>
+
+    <script src="config.js"></script>
+    <script>
+        document.getElementById(submitform).addEventListener('click',submitform)
+        document.getElementById(homelink).addEventListener('click', homelink)
+
+        function submitform(e) {
+            e.preventDefault();
+
+            const form= new FormData(document.querySelector('#reditform'));
+            form.append('apiKey',apikey);
+
+            fetch(rootpath + 'controller/insert-contact/',{
+                method : 'POST',
+                headers:{'Accept':'application/json , *.*'},
+                body : form
+            })
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function(data) {
+                if (data =="1") {
+                    alert("Contact Added.");
+                    homelink();
+                 }else{
+                    alert(data);
+                    homelink();
+                 }
+                
+            })
+            
+        }
+        function homelink() {
+            window.open("index","_self");
+            
+        }
+        
+    </script>
+    
+</body>
+</html>
